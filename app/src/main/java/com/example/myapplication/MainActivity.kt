@@ -12,6 +12,8 @@ const val TAG = "Life Cycle"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    // onCreate is called once when the activity is first created and is used to initialize the activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,26 +27,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // onPause is called when the activity is no longer visible i.e. in the background
     override fun onPause() {
         super.onPause()
         Log.i(TAG, "onPause")
     }
 
+    // onResume is called when the activity is visible again i.e. when the user returns to the activity to the foreground
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume")
     }
 
+    // onStart is called when the activity is visible to the user
     override fun onStart() {
         super.onStart()
         Log.i(TAG, "onStart")
     }
 
+    // onStop is called when the activity is no longer visible to the user
     override fun onStop() {
         super.onStop()
         Log.i(TAG, "onStop")
     }
 
+    // onDestroy is called before the activity is destroyed
     override fun onDestroy() {
         super.onDestroy()
         Log.i(TAG, "onDestroy")
