@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -46,12 +47,15 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             viewModel.loadData()
         }
-
 //        binding.fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).show()
 //        }
-    }
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
     private fun displaySnackBar(count: Int) {
         Snackbar.make(
             binding.root,
