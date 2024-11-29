@@ -1,7 +1,9 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,6 +15,8 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 //        })
 
 
-        val viewModel by viewModels<MainViewModel>()
+
         // We use viewModel.info.observe to display new value
         viewModel.info.observe(this) {
             displaySnackBar(it)
@@ -55,6 +59,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun handleShare(): Boolean {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT,
+                "I just purchased ${viewModel.info.value} bottles of olive oil!")
+            type = "text/plain"
+        }
+        startActivity(intent)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_share -> handleShare()
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
     private fun displaySnackBar(count: Int) {
         Snackbar.make(
