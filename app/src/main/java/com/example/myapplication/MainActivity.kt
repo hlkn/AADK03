@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -33,8 +34,23 @@ class MainActivity : AppCompatActivity() {
             viewModel.checkout()
         }
 
-//        viewModel.quantity.observe(this) { TODO("Not yet implemented") }
-//        viewModel.totalAmount.observe(this) { TODO("Not yet implemented") }
+        viewModel.quantity.observe(this) {
+            updateTotalCount(it)
+        }
+        viewModel.totalAmount.observe(this) {
+            handleCheckout(it)
+        }
+    }
 
+    private fun updateTotalCount(total: Int) {
+        binding.total.text = total.toString()
+    }
+
+    private fun handleCheckout(totalAmount: Int) {
+        Toast.makeText(
+            this,
+            getString(R.string.total_message, totalAmount),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
