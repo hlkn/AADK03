@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.add
 import androidx.fragment.app.replace
+import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -40,6 +41,22 @@ class MainActivity : FragmentActivity() {
 
                 else -> false
             }
+        }
+        val viewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+        viewModel.quantity.observe(this) {
+            updateBadge(it)
+        }
+    }
+
+
+    private fun updateBadge(count: Int) {
+        val badge = binding.bottomNavigation.getOrCreateBadge(R.id.action_shop)
+        if (count > 0) {
+            badge.number = count
+            badge.isVisible = true
+        } else {
+            badge.clearNumber()
+            badge.isVisible = false
         }
     }
 
